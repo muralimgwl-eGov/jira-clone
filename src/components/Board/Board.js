@@ -3,6 +3,7 @@ import StatusCard from "./components/StatusCard/StatusCard.js";
 import "./bord.css";
 
 class Board extends React.Component {
+  
   render() {
     const {tasks=[]}=this.props;//access props
     const filteredTodoTasks=tasks.filter((task)=>{return task.status==="ToDo"});

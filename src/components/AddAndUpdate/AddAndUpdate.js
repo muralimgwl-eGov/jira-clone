@@ -1,24 +1,33 @@
 import React from "react";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 class AddAndUpdate extends React.Component {
   render() {
+    const {task={},status=[],addTask,handleChangeName,handleChangeStatus,handleChangeDescription}=this.props;
+    console.log("add and update",this.props);
     return <div>
     <h2>Add/Update Task</h2>
     <form>
-      <label>
-        Name
-        <input type="text" placeholder="name of the task"/>
-      </label>
+       <TextField value={task.name}   onChange={(e)=>{
+         console.log(e.target.value);
+         handleChangeName(e.target.value)
+       }} id="standard-basic" label="Standard" />
+        {/*<input type="text" placeholder="name of the task" />*/}
+    
       <br/>
       <br/>
 
       <label>
         Status
-        <select>
-          <option value="select status"></option>
-          <option value="ToDo">ToDo</option>
-          <option value="Progress">Progress</option>
-          <option value="Done">Done</option>
+        <select onChange={(e)=>{
+          console.log(e.target.value);
+          handleChangeStatus(e.target.value)
+        }}>
+          {
+            status.map((sts,stsIndex)=><option key={stsIndex} value={sts.code}>{sts.code}</option>)
+          }
         </select>
       </label>
       <br/>
@@ -26,12 +35,20 @@ class AddAndUpdate extends React.Component {
 
       <label>
         Description
-        <textarea/>
+        <textarea onChange={(e)=>{
+          console.log(e.target.value);
+          handleChangeDescription(e.target.value)
+        }} value={task.descrption}/>
       </label>
       <br/>
       <br/>
-      
-      <button>Add/Update</button>
+
+      <Button  onClick={(e)=>{
+        e.preventDefault()
+        addTask(task)
+      }} variant="contained" color="primary">
+        Add/Update
+      </Button>
     </form>
 
     </div>;

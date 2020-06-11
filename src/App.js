@@ -3,6 +3,12 @@ import Board from "./components/Board/Board.js";
 import AddAndUpdate from "./components/AddAndUpdate/AddAndUpdate.js";
 import "./App.css";
 
+const initalTaskState = {
+  name: "",
+  status: "ToDo",
+  descrption: "",
+};
+
 class App extends React.Component {
   state = {
     tasks: [
@@ -16,7 +22,6 @@ class App extends React.Component {
         status: "ToDo",
         descrption: "google and face login",
       },
-
       {
         name: "Login screen-two",
         status: "ToDo",
@@ -33,17 +38,13 @@ class App extends React.Component {
         descrption: "react boiler plate",
       },
     ],
-    task: {
-      name: "",
-      status: "ToDo",
-      descrption: "",
-    },
+    task: initalTaskState,
     status: [
       {
         code: "Todo",
       },
       {
-        code: "Progress",
+        code: "Pending",
       },
       {
         code: "Done",
@@ -51,18 +52,73 @@ class App extends React.Component {
     ],
   };
 
-  // addTask=()=>{
-  //
-  // }
+  addTask = (task = {}) => {
+    //import exiting tasks from state
+    if (task.name && task.status && task.descrption) {
+      let { tasks = [] } = this.state;
+      //push new task
+      tasks.push(task);
+      //update state back
+      this.setState({
+        tasks,
+        task: initalTaskState,
+      });
+    } else {
+      alert("please enter required data");
+    }
+  };
+
+  handleChangeName = (value) => {
+    const { task } = this.state;
+    this.setState({
+      task: {
+        ...task,
+        name: value,
+      },
+    });
+  };
+
+  handleChangeStatus = (value) => {
+    const { task } = this.state;
+    this.setState({
+      task: {
+        ...task,
+        status: value,
+      },
+    });
+  };
+
+  handleChangeDescription = (value) => {
+    const { task } = this.state;
+    this.setState({
+      task: {
+        ...task,
+        descrption: value,
+      },
+    });
+  };
 
   render() {
+    console.log(this);
     const { tasks = [], task = {}, status = [] } = this.state;
-    // const {addTask}=this;
+    const {
+      addTask,
+      handleChangeName,
+      handleChangeStatus,
+      handleChangeDescription,
+    } = this;
 
     return (
       <div className="App">
         <Board tasks={tasks} />
-        <AddAndUpdate task={task} status={status} />
+        <AddAndUpdate
+          task={task}
+          status={status}
+          addTask={addTask}
+          handleChangeName={handleChangeName}
+          handleChangeStatus={handleChangeStatus}
+          handleChangeDescription={handleChangeDescription}
+        />
       </div>
     );
   }
