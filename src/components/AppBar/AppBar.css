@@ -1,0 +1,11 @@
+.app-bar-root {
+  flex-grow: 1;
+}
+
+.menu-button {
+  margin-right: 8px;
+}
+
+.title {
+  flex-grow: 1;
+}

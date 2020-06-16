@@ -1,14 +1,6 @@
 import React from "react";
-import AppBar from "./components/AppBar/AppBar.js";
-import Drawer from "./components/Drawer/Drawer.js";
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
-import "./App.css";
-import ActiveSprint from "./pages/ActiveSprint/ActiveSprint.js";
-import Backlog from "./pages/Backlog/BackLog.js";
-
+import Board from "../../components/Board/Board.js";
+import AddAndUpdate from "../../components/AddAndUpdate/AddAndUpdate.js";
 
 const initalTaskState = {
   name: "",
@@ -16,7 +8,7 @@ const initalTaskState = {
   descrption: "",
 };
 
-class App extends React.Component {
+class AciveSprint extends React.Component {
   state = {
     hasDrawerOpen:false,
     tasks: [
@@ -93,11 +85,6 @@ class App extends React.Component {
     });
   };
 
-  change=()=>{
-
-    this.props.history.push("/")
-  }
-
   handleChangeStatus = (value) => {
     const { task } = this.state;
     this.setState({
@@ -131,19 +118,20 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <AppBar toggeMenu={toggeMenu}/>
-        <Switch>
-          <Route path="/backlog">
-            <Backlog/>
-          </Route>
-          <Route path="/">
-            <ActiveSprint />
-          </Route>
-        </Switch>
-        <Drawer hasDrawerOpen={hasDrawerOpen} toggeMenu={toggeMenu}/>
+
+        <Board tasks={tasks} />
+        <AddAndUpdate
+          task={task}
+          status={status}
+          addTask={addTask}
+          handleChangeName={handleChangeName}
+          handleChangeStatus={handleChangeStatus}
+          handleChangeDescription={handleChangeDescription}
+        />
+
       </div>
     );
   }
 }
 
-export default App;
+export default AciveSprint;
