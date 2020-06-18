@@ -1,6 +1,11 @@
 import React from "react";
 import Board from "../../components/Board/Board.js";
 import AddAndUpdate from "../../components/AddAndUpdate/AddAndUpdate.js";
+import axios from "axios";
+
+const instance = axios.create({
+  baseURL: window.location.origin
+});
 
 const initalTaskState = {
   name: "",
@@ -10,7 +15,6 @@ const initalTaskState = {
 
 class AciveSprint extends React.Component {
   state = {
-    hasDrawerOpen:false,
     tasks: [
       {
         name: "Login screen",
@@ -52,12 +56,30 @@ class AciveSprint extends React.Component {
     ],
   };
 
-  toggeMenu=()=>{
-    const {hasDrawerOpen}=this.state;
-    this.setState({
-      hasDrawerOpen:!hasDrawerOpen
-    })
-  }
+  componentDidMount = () => {
+    instance
+      .post(
+        "localization/messages/v1/_search?module=rainmaker-common&locale=en_IN&tenantId=pb",
+        {
+          RequestInfo: {
+            apiId: "Rainmaker",
+            ver: ".01",
+            ts: "",
+            action: "_search",
+            did: "1",
+            key: "",
+            msgId: "20170310130900|en_IN",
+            authToken: "36e9fe62-39d5-4edc-b3f3-9679d88208c1",
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   addTask = (task = {}) => {
     //import exiting tasks from state
@@ -75,60 +97,32 @@ class AciveSprint extends React.Component {
     }
   };
 
-  handleChangeName = (value) => {
+  handleChange = (key = "name", value = "login screen") => {
     const { task } = this.state;
     this.setState({
       task: {
         ...task,
-        name: value,
-      },
-    });
-  };
-
-  handleChangeStatus = (value) => {
-    const { task } = this.state;
-    this.setState({
-      task: {
-        ...task,
-        status: value,
-      },
-    });
-  };
-
-  handleChangeDescription = (value) => {
-    const { task } = this.state;
-    this.setState({
-      task: {
-        ...task,
-        descrption: value,
+        [key]: value,
       },
     });
   };
 
   render() {
-    console.log(this);
-    const { tasks = [], task = {}, status = [] ,hasDrawerOpen} = this.state;
-    const {
-      addTask,
-      handleChangeName,
-      handleChangeStatus,
-      handleChangeDescription,
-      toggeMenu
-    } = this;
+    console.log("reder - n");
+
+    // console.log(this);
+    const { tasks = [], task = {}, status = [] } = this.state;
+    const { addTask, handleChange } = this;
 
     return (
       <div className="App">
-
         <Board tasks={tasks} />
         <AddAndUpdate
           task={task}
           status={status}
           addTask={addTask}
-          handleChangeName={handleChangeName}
-          handleChangeStatus={handleChangeStatus}
-          handleChangeDescription={handleChangeDescription}
+          handleChange={handleChange}
         />
-
       </div>
     );
   }

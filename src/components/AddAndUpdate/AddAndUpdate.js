@@ -5,14 +5,14 @@ import TextField from '@material-ui/core/TextField';
 
 class AddAndUpdate extends React.Component {
   render() {
-    const {task={},status=[],addTask,handleChangeName,handleChangeStatus,handleChangeDescription}=this.props;
-    console.log("add and update",this.props);
+    const {task={},status=[],addTask,handleChange}=this.props;
+    // console.log("add and update",this.props);
     return <div>
     <h2>Add/Update Task</h2>
     <form>
        <TextField value={task.name}   onChange={(e)=>{
          console.log(e.target.value);
-         handleChangeName(e.target.value)
+         handleChange("name",e.target.value)
        }} id="standard-basic" label="Standard" />
         {/*<input type="text" placeholder="name of the task" />*/}
 
@@ -23,7 +23,7 @@ class AddAndUpdate extends React.Component {
         Status
         <select onChange={(e)=>{
           console.log(e.target.value);
-          handleChangeStatus(e.target.value)
+          handleChange("status",e.target.value)
         }}>
           {
             status.map((sts,stsIndex)=><option key={stsIndex} value={sts.code}>{sts.code}</option>)
@@ -37,7 +37,7 @@ class AddAndUpdate extends React.Component {
         Description
         <textarea onChange={(e)=>{
           console.log(e.target.value);
-          handleChangeDescription(e.target.value)
+          handleChange("descrption",e.target.value)
         }} value={task.descrption}/>
       </label>
       <br/>
