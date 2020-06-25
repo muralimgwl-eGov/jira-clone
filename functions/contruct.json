@@ -1,0 +1,65 @@
+// jira
+
+  // tasks
+
+  // sprint
+
+
+
+
+  // feature
+
+  // add task
+  // creating sprint
+  // login
+  // add developers to sprint
+  // projects
+
+
+
+
+jira:{
+    sprint: {
+      <id>:{
+        name:,
+        start:,
+        endDate:,
+        goals:,
+        tasks:{
+          <id>:true
+        },
+        users:{
+          <userId>:true
+        }
+      }
+
+    },
+    users: {
+      <userId>:{
+        name:,
+        email:
+      }
+    },
+    projects:{
+      <id>:{
+        name:,
+        descritpion:,
+        users:{
+          <userID>:true,
+          .
+          .
+          .
+        }
+      },
+      .
+      .
+      .
+    },
+    tasks:{
+      <id>:{
+        name:,
+        status:,
+        descritpion:
+      }
+    }
+  }
