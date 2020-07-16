@@ -54,7 +54,6 @@ const formHoc = (Component) => {
 
   const mapStateToProps = (state) => {
     console.log(state);
-    debugger;
     const { tasks, task, sprints, sprint, status } = state;
     return {
       tasks,

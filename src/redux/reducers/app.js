@@ -1,4 +1,4 @@
-import {ADD_TASK,HANDLE_CHANGE} from "../action-types/action-types"
+import {ADD_TASK,HANDLE_CHANGE,INCREMENT_TIME_AFTER_ONE_SEC} from "../action-types/action-types"
 import { initalTaskState, initalSprintObject } from "../../utils/constants";
 
 
@@ -64,6 +64,7 @@ const initialState={
     },
   ],
   sprint: initalSprintObject,
+  time:0
 }
 
 
@@ -88,6 +89,15 @@ export default (state=initialState,action)=>
         ...state,
         task
       }
+
+    case INCREMENT_TIME_AFTER_ONE_SEC:
+      let {time}=state;
+      time++
+      return {
+        ...state,
+        time
+      }
+
     default:
       return state;
 

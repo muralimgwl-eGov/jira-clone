@@ -8,6 +8,9 @@ import {
 import "./App.css";
 import ActiveSprint from "./pages/ActiveSprint/ActiveSprint.js";
 import Backlog from "./pages/Backlog/BackLog.js";
+import  {addTimerAysnc} from "./redux/actions/app";
+import {connect}  from  "react-redux";
+import {Button} from "@material-ui/core";
 
 
 class App extends React.Component {
@@ -29,6 +32,8 @@ class App extends React.Component {
       toggeMenu
     } = this;
 
+    const {addTimerAysnc, time}=this.props;
+
     return (
       <div className="App">
         <AppBar toggeMenu={toggeMenu}/>
@@ -41,9 +46,25 @@ class App extends React.Component {
           </Route>
         </Switch>
         <Drawer hasDrawerOpen={hasDrawerOpen} toggeMenu={toggeMenu}/>
+        <h4>{time}</h4>
+        <Button variant="contained" onClick={(e)=>{
+          addTimerAysnc()}}>Increament sec after 2</Button>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  const { time } = state;
+  return {
+    time
+  };
+};
+
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    addTimerAysnc:()=>dispatch(addTimerAysnc())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
